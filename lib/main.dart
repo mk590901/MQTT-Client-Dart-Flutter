@@ -37,8 +37,27 @@ class OperationsPage extends StatelessWidget {
         await showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Exit from app'),
-            content: Text('Are you sure?'),
+            title: Text(
+              'Exit from app',
+              style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.blueGrey,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.center,
+                  child: Text('Are you sure?',
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontStyle: FontStyle.italic)),
+                ),
+              ],
+            ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
@@ -48,7 +67,6 @@ class OperationsPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop(true);
                   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-                  //exit(0);
                 },
                 child: Text('Yes'),
               ),
@@ -86,20 +104,28 @@ class ButtonScreen extends StatelessWidget {
       children: [
         Expanded(
           child: ListView(
-            children: ['Connect', 'Subscribe', 'Publish', 'Unsubscribe', 'Disconnect'].map((button) {
+            children: [
+              'Connect',
+              'Subscribe',
+              'Publish',
+              'Unsubscribe',
+              'Disconnect'
+            ].map((button) {
               return BlocBuilder<ButtonBloc, ButtonState>(
                 builder: (context, state) {
-
-                  bool isLoading = state is ButtonLoading && state.button == button;
+                  bool isLoading =
+                      state is ButtonLoading && state.button == button;
                   bool isSuccess = state.buttonStates[button] ?? false;
-                  bool isFailure = state is ButtonFailure && state.button == button;
+                  bool isFailure =
+                      state is ButtonFailure && state.button == button;
 
                   return Padding(
                     padding: const EdgeInsets.all(2.0),
                     child: ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                              (Set<MaterialState> states) {
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
                             if (isFailure) {
                               return Colors.red;
                             }
@@ -107,15 +133,21 @@ class ButtonScreen extends StatelessWidget {
                           },
                         ),
                       ),
-                      onPressed: isLoading ? null : () => context.read<ButtonBloc>().add(ButtonPressed(button)),
+                      onPressed: isLoading
+                          ? null
+                          : () => context
+                              .read<ButtonBloc>()
+                              .add(ButtonPressed(button)),
                       child: isLoading
                           ? CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      )
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.white),
+                            )
                           : Text(
-                        isSuccess ? '✓ $button' : button,
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
+                              isSuccess ? '✓ $button' : button,
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.white),
+                            ),
                     ),
                   );
                 },
@@ -128,7 +160,8 @@ class ButtonScreen extends StatelessWidget {
             listener: (context, state) {
               if (state is ButtonSuccess || state is ButtonFailure) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+                  _scrollController
+                      .jumpTo(_scrollController.position.maxScrollExtent);
                 });
               }
             },
@@ -142,7 +175,8 @@ class ButtonScreen extends StatelessWidget {
                     final message = state.messages[index];
                     final isError = message.contains('Failed');
                     return ListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
                       dense: true,
                       title: Text(
                         message,
