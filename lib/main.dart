@@ -61,6 +61,15 @@ class OperationsPage extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.blueAccent,
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(color: Colors.blueAccent),
+                  ),
+                ),
                 child: Text('No'),
               ),
               TextButton(
@@ -68,6 +77,15 @@ class OperationsPage extends StatelessWidget {
                   Navigator.of(context).pop(true);
                   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
                 },
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.blueGrey,
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(color: Colors.blueGrey),
+                  ),
+                ),
                 child: Text('Yes'),
               ),
             ],
