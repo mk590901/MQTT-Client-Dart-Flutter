@@ -169,7 +169,7 @@ class ButtonBloc extends Bloc<ButtonEvent, ButtonState> {
 
   void response(bool rc, String text, bool next) {
 
-    print ('response $rc [$text]');
+    print ('(!) response $rc [$text] ${currentEvent.button}');
     if (rc) {
       add(ButtonPressedSuccess(currentEvent.button, text));
     } else {

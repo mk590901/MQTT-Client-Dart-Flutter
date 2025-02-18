@@ -137,6 +137,8 @@ class ButtonScreen extends StatelessWidget {
                   bool isFailure =
                       state is ButtonFailure && state.button == button;
 
+                  print('======= [$button] isLoading->$isLoading isSuccess->$isSuccess isFailure->$isFailure =======');
+
                   return Padding(
                     padding: const EdgeInsets.all(2.0),
                     child: ElevatedButton(
