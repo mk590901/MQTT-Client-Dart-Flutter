@@ -117,7 +117,7 @@ class MqttHelper {
 	// }
 
 	void awaitPublishingSubscribe([Object? data]) {
-		callbackFunction.call(true,'Already subscribed', false);
+		callbackFunction.call(false,'Already subscribed', false);
 	}
 
 	void awaitPublishingPublish([Object? data]) {
