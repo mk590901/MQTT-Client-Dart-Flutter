@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -109,7 +110,8 @@ class ButtonBloc extends Bloc<ButtonEvent, ButtonState> {
 
   late MQTTBridge mqttBridge;
 
-  late ButtonPressed currentEvent;
+  late ButtonPressed _currentEvent;
+  //final Queue<ButtonPressed>	_eventsQueue	= Queue<ButtonPressed>();
 
   ButtonBloc()
       : super(ButtonInitial([], {
@@ -128,7 +130,8 @@ class ButtonBloc extends Bloc<ButtonEvent, ButtonState> {
       emit(ButtonLoading(event.button, currentMessages, currentButtonStates));
 
       // Save event в in variable
-      currentEvent = event;
+      _currentEvent = event;
+      //_eventsQueue.add(event);
 
       asyncFunction(event.button);
 
@@ -167,6 +170,16 @@ class ButtonBloc extends Bloc<ButtonEvent, ButtonState> {
   }
 
   void response(bool rc, String text, bool next) {
+
+    // if (_eventsQueue.isEmpty) {
+    //   return;
+    // }
+
+    //ButtonPressed currentEvent = _eventsQueue.removeFirst();
+
+    //ButtonPressed currentEvent = _eventsQueue.isEmpty ? _currentEvent : _eventsQueue.removeFirst();
+
+    ButtonPressed currentEvent = _currentEvent;
 
     print ('(!) response $rc [$text] ${currentEvent.button}');
     if (rc) {
