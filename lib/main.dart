@@ -23,11 +23,18 @@ class MQTTClientApp extends StatelessWidget {
 }
 
 class OperationsPage extends StatelessWidget {
+  const OperationsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return await showDialog(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, Object? result) async {
+        debugPrint('******* onPopInvoked($didPop) *******');
+        if (didPop) {
+          return;
+        }
+        await showDialog(
           context: context,
           builder: (context) => AlertDialog(
             title: Text('Exit from app'),
@@ -40,7 +47,8 @@ class OperationsPage extends StatelessWidget {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(true);
-                  exit(0);
+                  SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                  //exit(0);
                 },
                 child: Text('Yes'),
               ),
@@ -50,7 +58,13 @@ class OperationsPage extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Button States'),
+          title: Text('MQTT Client App',
+              style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic)),
+          backgroundColor: Colors.blueAccent,
+          foregroundColor: Colors.white,
+          leading: IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.bubble_chart_outlined, color: Colors.white)),
         ),
         body: BlocProvider(
           create: (_) => ButtonBloc(),
@@ -64,6 +78,8 @@ class OperationsPage extends StatelessWidget {
 class ButtonScreen extends StatelessWidget {
   final ScrollController _scrollController = ScrollController();
 
+  ButtonScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -73,12 +89,13 @@ class ButtonScreen extends StatelessWidget {
             children: ['Connect', 'Subscribe', 'Publish', 'Unsubscribe', 'Disconnect'].map((button) {
               return BlocBuilder<ButtonBloc, ButtonState>(
                 builder: (context, state) {
+
                   bool isLoading = state is ButtonLoading && state.button == button;
                   bool isSuccess = state.buttonStates[button] ?? false;
                   bool isFailure = state is ButtonFailure && state.button == button;
 
                   return Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(2.0),
                     child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.resolveWith<Color>(
@@ -96,8 +113,8 @@ class ButtonScreen extends StatelessWidget {
                         valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       )
                           : Text(
-                        isSuccess ? '✓$button' : button,
-                        style: TextStyle(fontSize: 24),
+                        isSuccess ? '✓ $button' : button,
+                        style: TextStyle(fontSize: 16, color: Colors.white),
                       ),
                     ),
                   );
