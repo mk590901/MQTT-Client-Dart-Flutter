@@ -102,18 +102,21 @@ class MqttService {
   }
 
   void onMessageReceived(String topic, MqttPublishMessage message) {
-    final payload = MqttPublishPayload.bytesToStringAsString(message.payload.message);
+    final String payload = MqttPublishPayload.bytesToStringAsString(message.payload.message);
     print('Received message: $payload from topic: $topic');
+    _cb.call(true, payload, true);
   }
 
   void onConnected() {
-    print('******* onConnected $flutterClient *******');
-    _cb.call(true, 'Connect', true);
+    print('******* onConnected $_server *******');
+    //_cb.call(true, 'Connect', true);
+    _cb.call(true, 'Connected to $_server', true);
   }
 
   void onDisconnected() {
     print('******* onDisconnected ******* [${bridge.state()}]');
-    _cb.call(true, 'Disconnect', false);
+    //_cb.call(true, 'Disconnect', false);
+    _cb.call(true, 'Disconnected from $_server', false);
     if (bridge.isConnected()) {
       bridge.post('Disconnect');
       //bridge.post('OnDisconnected');
@@ -123,12 +126,14 @@ class MqttService {
 
   void onSubscribed(String topic) {
     print('******* onSubscribed to topic: $topic *******');
-    _cb.call(true, 'Subscribe', true);
+    //_cb.call(true, 'Subscribe', true);
+    _cb.call(true, 'Subscribed to $topic', true);
   }
 
   void onUnsubscribed(String? topic) {
     print('***!*** onUnsubscribed from topic: $topic ***!*** ${bridge.state()}');
-    _cb.call(true, 'Unsubscribe', false);
+    //_cb.call(true, 'Unsubscribe', false);
+    _cb.call(true, 'Unsubscribed from $topic', false);
     if (bridge.isSubscribed()) {
       bridge.post('Unsubscribe');
     }

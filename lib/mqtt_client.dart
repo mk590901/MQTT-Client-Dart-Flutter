@@ -9,21 +9,14 @@ class MQTTClient {
   late MqttService mqttService;
 
   final String subscribeTopic = 'hsm_v2/topic';
-
   final VoidCallbackBoolString callbackFunction;
-  final Random random = Random();
   final MQTTBridge bridge;
 
   MQTTClient(this.callbackFunction, this.bridge) {
     mqttService = MqttService(callbackFunction, bridge);
   }
 
-  //final MqttService mqttService = MqttService();
-
   void post (String event) {
-    // Future.delayed(const Duration(seconds: 1), () {
-    //   callbackFunction.call(oracle(), event);
-    // });
     switch (event) {
       case 'Connect':
         connect();
@@ -37,16 +30,9 @@ class MQTTClient {
       case 'Unsubscribe':
         unsubscribe();
         break;
-      // case 'OnUnsubscribe':
-      //   print('------- OnUnsubscribe -------');
-      //   break;
       case 'Disconnect':
         disconnect();
         break;
-      // case 'OnDisconnect':
-      //   print('------- OnDisconnect -------');
-      //   break;
-
     }
   }
 
@@ -76,18 +62,6 @@ class MQTTClient {
     print('******* disconnect *******');
     mqttService.disconnect();
     //callbackFunction.call(oracle(), 'Disconnect');
-  }
-
-  bool oracle() {
-    int value = getRandomInRange(1,100);
-    return true; //(value > 30 ? true : false);
-  }
-
-  int getRandomInRange(int min, int max) {
-    if (min > max) {
-      throw ArgumentError('min should be less than or equal to max');
-    }
-    return min + random.nextInt(max - min + 1);
   }
 
   String randomString(int length) {
