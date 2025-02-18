@@ -89,11 +89,11 @@ class MqttHelper {
 	// }
 
 	void awaitSubscribePublish([Object? data]) {
-		callbackFunction.call(false,'No subscribed', false);
+		callbackFunction.call(true,'No subscribed', false);
 	}
 
 	void awaitSubscribeUnsubscribe([Object? data]) {
-		callbackFunction.call(false,'No subscribed', false);
+		callbackFunction.call(true,'No subscribed', false);
 	}
 
 	// void subscribedExit([Object? data]) {
@@ -117,7 +117,7 @@ class MqttHelper {
 	// }
 
 	void awaitPublishingSubscribe([Object? data]) {
-		callbackFunction.call(false,'Already subscribed', false);
+		callbackFunction.call(true,'Already subscribed', false);
 	}
 
 	void awaitPublishingPublish([Object? data]) {
