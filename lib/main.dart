@@ -142,8 +142,8 @@ class ButtonScreen extends StatelessWidget {
                     child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
+                            WidgetStateProperty.resolveWith<Color>(
+                          (Set<WidgetState> states) {
                             if (isFailure) {
                               return Colors.red;
                             }
@@ -191,7 +191,7 @@ class ButtonScreen extends StatelessWidget {
                   separatorBuilder: (context, index) => Divider(height: 1),
                   itemBuilder: (context, index) {
                     final message = state.messages[index];
-                    final isError = message.contains('Failed');
+                    final isError = message.contains('Failed') || message.contains('failed');
                     return ListTile(
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
