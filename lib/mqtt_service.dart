@@ -48,13 +48,13 @@ class MqttService {
         });
       }
       else {
-        _cb.call(false, 'Connect', true);
+        _cb.call(false, 'Connect: MQTT client connection failed', true);
         print(
             'ERROR MQTT client connection failed - disconnecting, status is ${_client.connectionStatus}');
         disconnect();
       }
     }).catchError((error) {
-      _cb.call(false, 'Connect', true);
+      _cb.call(false, 'Connect: $error', true);
       print('Exception: $error');
       disconnect();
     });
