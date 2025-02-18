@@ -151,7 +151,6 @@ class ButtonBloc extends Bloc<ButtonEvent, ButtonState> {
         currentButtonStates['Publish'] = false;
         currentButtonStates['Unsubscribe'] = false;
       }
-
       emit(ButtonSuccess(event.button, currentMessages, currentButtonStates));
     });
 
