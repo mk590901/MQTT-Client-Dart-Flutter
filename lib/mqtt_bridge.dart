@@ -8,7 +8,6 @@ import 'typedef.dart';
 class MQTTBridge {
   late MqttHelper  _hsmHelper;
   final VoidCallbackBoolString callbackFunction;
-  final Random random = Random();
 
   void response(bool ok, String text, bool next) {
     print('MQTTBridge.response->[$text]->[$ok]');
@@ -36,30 +35,6 @@ class MQTTBridge {
 
   void post (String eventName){
     _hsmHelper.run(eventName);
-  }
-
-  void post2 (String eventName, VoidCallback succeeded, VoidCallback failed,){
-    //_hsmHelper.run(eventName);
-    //Future.delayed(Duration(seconds: 2));
-    sleep(Duration(seconds: 2));
-    if (oracle()) {
-      succeeded();
-    } else {
-      failed();
-    }
-  }
-
-
-  bool oracle() {
-    int value = getRandomInRange(1,100);
-    return true; //(value > 30 ? true : false);
-  }
-
-  int getRandomInRange(int min, int max) {
-    if (min > max) {
-      throw ArgumentError('min should be less than or equal to max');
-    }
-    return min + random.nextInt(max - min + 1);
   }
 
   bool isSubscribed() {
