@@ -12,8 +12,7 @@ Below is some information about the created hierarchical state machine.
 
 ### Scheme
 
-The Hierarchical state machine diagram describing the behavior of the MQTT client is shown below in the figure. There are three main states: disconnected, connected and subscribed and several intermediate states: connecting, subscribing and publishing. The state machine is controlled via events: connect, subscribe, publish, unsubscribe and disconnect. 
-
+The Hierarchical state machine diagram describing the behavior of the __MQTT__ client is shown below in the figure. There are three main states: __disconnected__, __connected__ and __subscribed__ and several intermediate states: __connecting__, __subscribing__ and __publishing__. The state machine is controlled via events: _connect_, _subscribe_, _publish_, _unsubscribe_ and _disconnect_. 
 
 ![output1](https://github.com/user-attachments/assets/07f5f09e-0a0e-4788-b126-dddf5defe84f)
 
