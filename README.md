@@ -1,10 +1,10 @@
-# mqtt_ff_client
+# MQTT-Client-Dart
 
-A new Flutter project.
+MQTT Client Flutter demo app.
 
-## Getting Started
+## Introduction
 
-
+The application uses package https://pub.dev/packages/mqtt_client to implement access, communication, subscription, and sending and receiving data via the __MQTT bridge__ host. The package isn't used directly, but indirectly, through the hierarchical state machine by sending events and receiving messages about the end of operations. This allows for simplified sending and receiving data and error handling.
 
 
 ## MQTT Client State Machine
