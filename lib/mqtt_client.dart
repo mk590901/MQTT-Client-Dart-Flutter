@@ -16,26 +16,6 @@ class MQTTClient {
     mqttService = MqttService(callbackFunction, bridge);
   }
 
-  void post (String event) {
-    switch (event) {
-      case 'Connect':
-        connect();
-        break;
-      case 'Subscribe':
-        subscribe();
-        break;
-      case 'Publish':
-        publish();
-        break;
-      case 'Unsubscribe':
-        unsubscribe();
-        break;
-      case 'Disconnect':
-        disconnect();
-        break;
-    }
-  }
-
   void connect () {
     print('******* connect *******');
     mqttService.connect();
